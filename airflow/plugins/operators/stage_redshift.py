@@ -16,23 +16,17 @@ class StageToRedshiftOperator(BaseOperator):
     def __init__(self,
                  conn_id,
                  sql_template,
-                 songs_s3_location,
-                 events_s3_location,
+                 s3_location,
+                 table_name,
                  *args, **kwargs):
 
         super(StageToRedshiftOperator, self).__init__(*args, **kwargs)
         self.conn_id = conn_id
         self.sql_template = sql_template
-        self.songs_location = songs_s3_location
-        self.events_location = events_s3_location
-        self.staging_songs_insert = """
-        COPY staging_songs
-        FROM '{}'
-        ACCESS_KEY_ID '{}'
-        SECRET_ACCESS_KEY '{}'
-        """
-        self.staging_events_insert = """
-        COPY staging_events
+        self.s3_location = s3_location
+        self.table_name = table_name
+        self.staging_table_insert = """
+        COPY {}
         FROM '{}'
         ACCESS_KEY_ID '{}'
         SECRET_ACCESS_KEY '{}'
@@ -46,21 +40,8 @@ class StageToRedshiftOperator(BaseOperator):
 
         aws_hook = AwsHook('aws_credentials')
         credentials = aws_hook.get_credentials()
-        self.logging.info("Staging songs table")
-        redshift_hook.run(sql=self.staging_songs_insert.format(self.songs_location,
+        self.logging.info(f"Staging {}} table".format(self.table_name))
+        redshift_hook.run(sql=self.staging_songs_insert.format(self.s3_location,
                                                                credentials.access_key,
                                                                credentials.secret_key))
-        self.logging.info("Songs table successfully staged")
-
-        self.logging.info("Staging events table")
-        redshift_hook.run(sql=self.staging_songs_insert.format(self.events_location,
-                                                               credentials.access_key,
-                                                               credentials.secret_key))
-        self.logging.info("Events table successfully staged")
-
-
-
-
-
-
-
+        self.logging.info(f"{} table successfully staged".format(self.table_name))
