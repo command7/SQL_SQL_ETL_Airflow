@@ -19,7 +19,7 @@ class LoadDimensionOperator(BaseOperator):
 
     def execute(self, context):
         self.log.info(f'Extracting data from staging tables to {}'.format(self.dest_table_name))
-        redshift_hook = PostgresHook('redshift_connection')
+        redshift_hook = PostgresHook(self.conn_id)
         if self.dest_table_name == "users":
             redshift_hook.run(sql=SqlQueries.user_table_insert)
             self.logging.info(f"Successfully loaded data into {} table".format(self.dest_table_name))
