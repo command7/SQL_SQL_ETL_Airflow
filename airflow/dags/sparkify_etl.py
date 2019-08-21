@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 import os
 from airflow import DAG
+import datetime
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.sparkify_plugin import (StageToRedshiftOperator,
                                LoadFactOperator,
@@ -12,7 +13,8 @@ default_args = {
     'owner': 'Vijay',
     'depends_on_past': False
     'start_date': datetime(2019, 1, 12),
-    'retries': 3
+    'retries': 3,
+    'retry_delay': datetime.timedelta(minutes=5)
 }
 
 dag = DAG('Songs_Events_ETL',
