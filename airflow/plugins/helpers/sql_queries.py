@@ -58,3 +58,5 @@ class SqlQueries:
             extract(dayofweek from start_time) as weekday
         FROM songplays
     """)
+
+    truncate_table = "TRUNCATE TABLE {}"
