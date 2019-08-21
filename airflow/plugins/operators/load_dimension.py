@@ -21,19 +21,19 @@ class LoadDimensionOperator(BaseOperator):
         self.log.info(f'Extracting data from staging tables to {}'.format(self.dest_table_name))
         redshift_hook = PostgresHook(self.conn_id)
         if self.dest_table_name == "users":
-            redshift_hook.run(sql=SqlQueries.user_table_insert)
+            redshift_hook.run(sql=SqlQueries.user_table_insert.format(self.dest_table_name))
             self.logging.info(f"Successfully loaded data into {} table".format(self.dest_table_name))
         elif self.dest_table_name == 'songs':
-            redshift_hook.run(sql=SqlQueries.song_table_insert)
+            redshift_hook.run(sql=SqlQueries.song_table_insert.format(self.dest_table_name))
             self.logging.info(f"Successfully loaded data into {} table".format(self.dest_table_name))
         elif self.dest_table_name == 'time':
-            redshift_hook.run(sql=SqlQueries.time_table_insert)
+            redshift_hook.run(sql=SqlQueries.time_table_insert.format(self.dest_table_name))
             self.logging.info(f"Successfully loaded data into {} table".format(self.dest_table_name))
         elif self.dest_table_name == 'users':
-            redshift_hook.run(sql=SqlQueries.user_table_insert)
+            redshift_hook.run(sql=SqlQueries.user_table_insert.format(self.dest_table_name))
             self.logging.info(f"Successfully loaded data into {} table".format(self.dest_table_name))
         elif self.dest_table_name == 'artists':
-            redshift_hook.run(sql=SqlQueries.artist_table_insert)
+            redshift_hook.run(sql=SqlQueries.artist_table_insert.format(self.dest_table_name))
             self.logging.info(f"Successfully loaded data into {} table".format(self.dest_table_name))
         else:
             self.logging.error("Wrong table name")

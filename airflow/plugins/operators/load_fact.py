@@ -10,7 +10,7 @@ class LoadFactOperator(BaseOperator):
     @apply_defaults
     def __init__(self,
                  conn_id,
-                 table_name="Not Specified",
+                 table_name,
                  *args, **kwargs):
 
         super(LoadFactOperator, self).__init__(*args, **kwargs)
@@ -18,7 +18,7 @@ class LoadFactOperator(BaseOperator):
         self.table_name = table_name
 
     def execute(self, context):
-        self.log.info(f'Extracting data into facts table {}'.format(self.table_name))
+        self.log.info(f'Extracting data into facts table {self.table_name}')
         redshift_hook = PostgresHook(self.conn_id)
-        redshift_hook.run(sql=SqlQueries.songplay_table_insert)
-        self.logging.info(f"Successfully loaded data into {}".format(self.table_name))
+        redshift_hook.run(sql=SqlQueries.songplay_table_insert.format(self.table_name))
+        self.logging.info(f"Successfully loaded data into {self.table_name} table")
