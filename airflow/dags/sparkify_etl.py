@@ -10,6 +10,7 @@ from airflow.operators.sparkify_plugin import (StageToRedshiftOperator,
 
 default_args = {
     'owner': 'Vijay',
+    'depends_on_past': False
     'start_date': datetime(2019, 1, 12),
 }
 
