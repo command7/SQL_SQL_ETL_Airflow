@@ -42,5 +42,5 @@ class LoadDimensionOperator(BaseOperator):
             redshift_hook.run(sql=SqlQueries.artist_table_insert.format(self.table_name))
             self.logging.info(f"Successfully loaded data into {self.table_name} table")
         else:
-            self.logging.error("Wrong table name")
+            self.logging.error("No such table exists")
             raise ValueError
