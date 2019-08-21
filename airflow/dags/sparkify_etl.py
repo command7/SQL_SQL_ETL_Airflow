@@ -14,7 +14,8 @@ default_args = {
     'depends_on_past': False
     'start_date': datetime(2019, 1, 12),
     'retries': 3,
-    'retry_delay': datetime.timedelta(minutes=5)
+    'retry_delay': datetime.timedelta(minutes=5),
+    'email_on_retry': False
 }
 
 dag = DAG('Songs_Events_ETL',
