@@ -8,6 +8,7 @@ verify_ssl = true
 [packages]
 apache-airflow = "*"
 psycopg2 = "*"
+boto3 = "*"
 
 [requires]
 python_version = "3.7"
