@@ -76,9 +76,9 @@ load_time_dimension_table = LoadDimensionOperator(
     table_name='time'
 )
 
-# run_quality_checks = DataQualityOperator(
-#     task_id='Run_data_quality_checks',
-#     dag=dag
-# )
+run_quality_checks = DataQualityOperator(
+    task_id='Run_data_quality_checks',
+    dag=dag
+)
 
 end_operator = DummyOperator(task_id='Stop_execution',  dag=dag)
