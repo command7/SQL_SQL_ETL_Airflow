@@ -9,11 +9,11 @@ from airflow.operators.sparkify_plugin import (StageToRedshiftOperator,
 
 
 default_args = {
-    'owner': 'udacity',
+    'owner': 'Vijay',
     'start_date': datetime(2019, 1, 12),
 }
 
-dag = DAG('udac_example_dag',
+dag = DAG('Songs_Events_ETL',
           default_args=default_args,
           description='Load and transform data in Redshift with Airflow',
           schedule_interval='0 * * * *'
