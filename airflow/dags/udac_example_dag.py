@@ -25,37 +25,55 @@ start_operator = DummyOperator(task_id='Begin_execution',  dag=dag)
 
 stage_events_to_redshift = StageToRedshiftOperator(
     task_id='Stage_events',
-    dag=dag
+    dag=dag,
+    conn_id='redshift_connection',
+    sql_template='create_tables.sql',
+    s3_location='',
+    table_name="staging_events"
 )
 
 stage_songs_to_redshift = StageToRedshiftOperator(
     task_id='Stage_songs',
-    dag=dag
+    dag=dag,
+    conn_id='redshift_connection',
+    sql_template='create_tables.sql',
+    s3_location='',
+    table_name="staging_events"
 )
 
 load_songplays_table = LoadFactOperator(
     task_id='Load_songplays_fact_table',
-    dag=dag
+    dag=dag,
+    conn_id='redshift_connection',
+    table_name='songplays'
 )
 
 load_user_dimension_table = LoadDimensionOperator(
     task_id='Load_user_dim_table',
-    dag=dag
+    dag=dag,
+    conn_id='redshift_connection',
+    table_name='users'
 )
 
 load_song_dimension_table = LoadDimensionOperator(
     task_id='Load_song_dim_table',
-    dag=dag
+    dag=dag,
+    conn_id='redshift_connection',
+    table_name='songs'
 )
 
 load_artist_dimension_table = LoadDimensionOperator(
     task_id='Load_artist_dim_table',
-    dag=dag
+    dag=dag,
+    conn_id='redshift_connection',
+    table_name='artists'
 )
 
 load_time_dimension_table = LoadDimensionOperator(
     task_id='Load_time_dim_table',
-    dag=dag
+    dag=dag,
+    conn_id='redshift_connection',
+    table_name='time'
 )
 
 run_quality_checks = DataQualityOperator(
