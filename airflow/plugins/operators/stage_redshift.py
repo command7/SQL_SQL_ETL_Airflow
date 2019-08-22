@@ -2,6 +2,7 @@ from airflow.hooks.postgres_hook import PostgresHook
 from airflow.models import BaseOperator
 from airflow.utils.decorators import apply_defaults
 from airflow.contrib.hooks.aws_hook import AwsHook
+import logging
 
 
 staging_events_insert = """
@@ -33,7 +34,7 @@ class StageToRedshiftOperator(BaseOperator):
 
     def execute(self, context):
         # self.log.info("Creating staging tables if not present.")
-        # redshift_hook = PostgresHook(self.conn_id)
+        redshift_hook = PostgresHook(self.conn_id)
         # redshift_hook.run(sql=self.sql_template)
         # self.log.info("Staging tables created.")
 
