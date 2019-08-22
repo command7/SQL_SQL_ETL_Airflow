@@ -11,8 +11,8 @@ from airflow.operators.sparkify_plugin import (StageToRedshiftOperator,
 
 default_args = {
     'owner': 'Vijay',
-    'depends_on_past': False
-    'start_date': datetime(2019, 1, 12),
+    'depends_on_past': False,
+    'start_date': datetime.datetime(2019, 1, 12),
     'retries': 3,
     'retry_delay': datetime.timedelta(minutes=5),
     'email_on_retry': False
