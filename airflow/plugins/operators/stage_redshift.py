@@ -41,7 +41,7 @@ class StageToRedshiftOperator(BaseOperator):
         aws_hook = AwsHook('aws_credentials')
         credentials = aws_hook.get_credentials()
         logging.info(f"Staging {self.table_name} table")
-        redshift_hook.run(sql=self.staging_songs_insert.format(self.s3_location,
+        redshift_hook.run(sql=self.staging_table_insert.format(self.s3_location,
                                                                credentials.access_key,
                                                                credentials.secret_key))
         logging.info(f"{self.table_name} table successfully staged")
