@@ -32,10 +32,10 @@ class StageToRedshiftOperator(BaseOperator):
         """
 
     def execute(self, context):
-        self.log.info("Creating staging tables if not present.")
-        redshift_hook = PostgresHook(self.conn_id)
-        redshift_hook.run(sql=self.sql_template)
-        self.log.info("Staging tables created.")
+        # self.log.info("Creating staging tables if not present.")
+        # redshift_hook = PostgresHook(self.conn_id)
+        # redshift_hook.run(sql=self.sql_template)
+        # self.log.info("Staging tables created.")
 
         aws_hook = AwsHook('aws_credentials')
         credentials = aws_hook.get_credentials()
