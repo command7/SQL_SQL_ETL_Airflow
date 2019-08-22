@@ -1,6 +1,7 @@
 from airflow.hooks.postgres_hook import PostgresHook
 from airflow.models import BaseOperator
 from airflow.utils.decorators import apply_defaults
+import logging
 
 class DataQualityOperator(BaseOperator):
 
@@ -20,4 +21,4 @@ class DataQualityOperator(BaseOperator):
         redshift_hook = PostgresHook(self.conn_id)
         for table_name in self.table_names:
             record_counts = redshift_hook.run(sql=f"SELECT COUNT(*) FROM {table_name}")
-            self.logging.info(f"Query Result: {record_counts}")
+            logging.info(f"Query Result: {record_counts}")
