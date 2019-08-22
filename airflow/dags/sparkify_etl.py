@@ -41,7 +41,7 @@ stage_songs_to_redshift = StageToRedshiftOperator(
     conn_id='redshift_connection',
     sql_template='create_tables.sql',
     s3_location='s3://udacity-dend/song_data',
-    table_name="staging_events"
+    table_name="staging_songs"
 )
 
 load_songplays_table = LoadFactOperator(
