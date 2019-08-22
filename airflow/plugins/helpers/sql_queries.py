@@ -1,15 +1,15 @@
 class SqlQueries:
     songplay_table_insert = ("""
-        INSERT INTO {} (start_time, user_id, level, song_id, artist_id, session_id, location, user_agent)
+        INSERT INTO {} (songplay_id, start_time, user_id, level, song_id, artist_id, session_id, location, user_agent)
         SELECT
-                md5(events.sessionid || events.start_time) songplay_id,
-                events.start_time as start_time, 
-                events.userid as user_id, 
-                events.level as level, 
-                songs.song_id as song_id, 
-                songs.artist_id as artist_id, 
+                md5(events.sessionid || events.start_time) playid,
+                events.start_time as start_time,
+                events.userid as user_id,
+                events.level as level,
+                songs.song_id as song_id,
+                songs.artist_id as artist_id,
                 events.sessionid as session_id,
-                events.location as location, 
+                events.location as location,
                 events.useragent as user_agent
                 FROM (SELECT TIMESTAMP 'epoch' + ts/1000 * interval '1 second' AS start_time, *
             FROM staging_events
@@ -21,8 +21,8 @@ class SqlQueries:
     """)
 
     user_table_insert = ("""
-        INSERT INTO {} (user_id, first_name, last_name, gender, level)
-        SELECT distinct userid as user_id,
+        INSERT INTO {} (userid, first_name, last_name, gender, level)
+        SELECT distinct userid as userid,
             firstname as first_name,
             lastname as last_name,
             gender,
@@ -32,14 +32,14 @@ class SqlQueries:
     """)
 
     song_table_insert = ("""
-        INSERT INTO {} (song_id, title, artist_id, year, duration)
+        INSERT INTO {} (songid, title, artist_id, year, duration)
         SELECT distinct song_id, title, artist_id, year, duration
         FROM staging_songs
     """)
 
     artist_table_insert = ("""
         INSERT INTO {} (artist_id, name, location, lattitude, longitude)
-        SELECT distinct artist_id,
+        SELECT distinct artistid,
             artist_name as name,
             artist_location as location,
             artist_latitude as lattitude,
