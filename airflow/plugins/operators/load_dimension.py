@@ -11,7 +11,7 @@ class LoadDimensionOperator(BaseOperator):
     def __init__(self,
                  conn_id,
                  table_name,
-                 truncate_insert=False
+                 truncate_insert=False,
                  *args, **kwargs):
 
         super(LoadDimensionOperator, self).__init__(*args, **kwargs)
