@@ -1,6 +1,6 @@
 class SqlQueries:
     songplay_table_insert = ("""
-        INSERT INTO {} (songplay_id, start_time, user_id, level, song_id, artist_id, session_id, location, user_agent)
+        INSERT INTO {} (playid, start_time, user_id, level, song_id, artist_id, session_id, location, user_agent)
         SELECT
                 md5(events.sessionid || events.start_time) playid,
                 events.start_time as start_time,
@@ -33,7 +33,7 @@ class SqlQueries:
 
     song_table_insert = ("""
         INSERT INTO {} (songid, title, artist_id, year, duration)
-        SELECT distinct song_id, title, artist_id, year, duration
+        SELECT distinct song_id as songid, title, artist_id, year, duration
         FROM staging_songs
     """)
 
