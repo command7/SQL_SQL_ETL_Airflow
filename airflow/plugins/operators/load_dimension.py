@@ -19,9 +19,17 @@ class LoadDimensionOperator(BaseOperator):
         self.conn_id = conn_id
         self.table_name = table_name
         self.truncate_insert = truncate_insert
+        self.valid_tables = ["users",
+                             "songplays",
+                             "artists",
+                             "songs",
+                             "time"]
 
     def execute(self, context):
         redshift_hook = PostgresHook(self.conn_id)
+        if self.table_name not in self.valid_tables:
+            logging.error("No such table exists")
+            raise ValueError
         if self.truncate_insert:
             logging.info(f"Clearing {self.table_name} table")
             redshift_hook.run(SqlQueries.truncate_table.format(self.table_nmae))
@@ -42,6 +50,3 @@ class LoadDimensionOperator(BaseOperator):
         elif self.table_name == 'artists':
             redshift_hook.run(sql=SqlQueries.artist_table_insert.format(self.table_name))
             logging.info(f"Successfully loaded data into {self.table_name} table")
-        else:
-            logging.error("No such table exists")
-            raise ValueError
