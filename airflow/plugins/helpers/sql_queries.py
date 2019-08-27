@@ -2,7 +2,7 @@ class SqlQueries:
     songplay_table_insert = ("""
         INSERT INTO {} (playid, start_time, user_id, level, song_id, artist_id, session_id, location, user_agent)
         SELECT
-                md5(events.sessionid || events.start_time) playid,
+                md5(events.start_time) playid,
                 events.start_time as start_time,
                 events.userid as user_id,
                 events.level as level,
