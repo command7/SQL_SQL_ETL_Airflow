@@ -5,10 +5,6 @@ from airflow.contrib.hooks.aws_hook import AwsHook
 import logging
 
 
-staging_events_insert = """
-"""
-
-
 class StageToRedshiftOperator(BaseOperator):
     ui_color = '#358140'
 
@@ -18,6 +14,7 @@ class StageToRedshiftOperator(BaseOperator):
                  sql_template,
                  s3_location,
                  table_name,
+                 json_path=None,
                  *args, **kwargs):
 
         super(StageToRedshiftOperator, self).__init__(*args, **kwargs)
@@ -25,12 +22,21 @@ class StageToRedshiftOperator(BaseOperator):
         self.sql_template = sql_template
         self.s3_location = s3_location
         self.table_name = table_name
-        self.staging_table_insert = """
+        self.json_path = json_path
+        self.staging_songs_insert = """
         COPY {}
         FROM '{}'
         ACCESS_KEY_ID '{}'
         SECRET_ACCESS_KEY '{}'
         JSON 'auto'
+        """
+        self.staging_events_insert = """
+        COPY {} 
+        FROM '{}'
+        ACCESS_KEY_ID '{}'
+        SECRET_ACCESS_KEY '{}'
+        JSON '{}'
+        timeformat 'auto'
         """
 
     def execute(self, context):
@@ -44,7 +50,14 @@ class StageToRedshiftOperator(BaseOperator):
         logging.info(f"Staging {self.table_name} table")
         logging.info(f"Access key: {credentials.access_key}")
         logging.info(f"Secret key: {credentials.secret_key}")
-        redshift_hook.run(sql=self.staging_table_insert.format(self.table_name,
+        if self.table_name =='staging_events':
+            redshift_hook.run(sql=self.staging_events_insert.format(self.table_name,
+                                                                    self.s3_location,
+                                                                    credentials.access_key,
+                                                                    credentials.secret_key,
+                                                                    self.json_path))
+        else:
+            redshift_hook.run(sql=self.staging_songs_insert.format(self.table_name,
                                                                self.s3_location,
                                                                credentials.access_key,
                                                                credentials.secret_key))

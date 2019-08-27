@@ -11,13 +11,15 @@ class SqlQueries:
                 events.sessionid as session_id,
                 events.location as location,
                 events.useragent as user_agent
-                FROM (SELECT TIMESTAMP 'epoch' + ts/1000 * interval '1 second' AS start_time, *
+        FROM (SELECT TIMESTAMP 'epoch' + ts/1000 * interval '1 second' AS start_time, *
             FROM staging_events
             WHERE page='NextSong') events
-            LEFT JOIN staging_songs songs
-            ON events.song = songs.title
-                AND events.artist = songs.artist_name
-                AND events.length = songs.duration
+        LEFT JOIN staging_songs songs
+        ON events.song = songs.title
+        AND events.artist = songs.artist_name
+        AND events.length = songs.duration
+        WHERE user_id IS NOT NULL
+        AND start_time IS NOt NULL
     """)
 
     user_table_insert = ("""
@@ -39,7 +41,7 @@ class SqlQueries:
 
     artist_table_insert = ("""
         INSERT INTO {} (artist_id, name, location, lattitude, longitude)
-        SELECT distinct artistid,
+        SELECT distinct artist_id,
             artist_name as name,
             artist_location as location,
             artist_latitude as lattitude,

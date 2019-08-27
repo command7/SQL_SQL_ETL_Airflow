@@ -32,7 +32,8 @@ stage_events_to_redshift = StageToRedshiftOperator(
     conn_id='redshift_connection',
     sql_template='create_tables.sql',
     s3_location='s3://udacity-dend/log_data',
-    table_name="staging_events"
+    table_name="staging_events",
+    json_path='s3://udacity-dend/log_json_path.json'
 )
 
 stage_songs_to_redshift = StageToRedshiftOperator(
