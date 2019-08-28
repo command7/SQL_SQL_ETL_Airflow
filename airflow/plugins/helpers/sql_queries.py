@@ -31,6 +31,7 @@ class SqlQueries:
             level
         FROM staging_events
         WHERE page='NextSong'
+        AND userid IS NOT NULL
     """)
 
     song_table_insert = ("""
