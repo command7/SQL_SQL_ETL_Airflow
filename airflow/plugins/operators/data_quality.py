@@ -20,5 +20,9 @@ class DataQualityOperator(BaseOperator):
     def execute(self, context):
         redshift_hook = PostgresHook(self.conn_id)
         for table_name in self.table_names:
-            record_counts = redshift_hook.run(sql=f"SELECT COUNT(*) FROM {table_name}")
-            logging.info(f"Query Result: {record_counts}")
+            record_counts = redshift_hook.get_records(sql=f"SELECT COUNT(*) FROM {table_name}")
+            num_records = int(record_counts[0][0])
+            if num_records > 0:
+                logging.info(f"At least one record present in table {table_name}.")
+            else:
+                raise Exception(f"No records were copied into {table_name}")
