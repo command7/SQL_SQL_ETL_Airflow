@@ -41,8 +41,8 @@ class SqlQueries:
     """)
 
     artist_table_insert = ("""
-        INSERT INTO {} (artist_id, name, location, lattitude, longitude)
-        SELECT distinct artist_id,
+        INSERT INTO {} (artistid, name, location, lattitude, longitude)
+        SELECT distinct artist_id as artistid,
             artist_name as name,
             artist_location as location,
             artist_latitude as lattitude,
