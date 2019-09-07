@@ -91,6 +91,7 @@ In order to load them in to a data warehouse (*Redshift*), a data model was desi
 in *Redshift* using _COPY_ command which copies data in a parallel fashion.
 * Using *SQL*, data is extracted from these staging tables, transformed to match the STAR schema design and loaded into 
 appropriate fact and dimension tables.
+* After the ETL process, data integrity is verified by querying the fact and dimension tables for _number of records_.
 * The entire workflow is automated and executed in a particular order to prevent data discrepancies using `Apache Airflow`.
 * The order of execution is as follows
 ![Order of workflow execution](https://github.com/command7/SQL_SQL_ETL_Airflow/blob/master/Images/workflow_sequence.png)
@@ -99,3 +100,32 @@ appropriate fact and dimension tables.
 ## How to run
 
 ## Configurations required
+
+Certain credentials need to be stored in `Apache Airflow`'s connections menu.
+
+Open `Airflow GUI` -> `Admin`  -> `Connections` and add the following connections.
+* *Redshift Connection*
+
+`Conn Id` -> redshift_connection
+
+`Conn Type` -> Postgres
+
+`Host` -> Redshift end point address
+
+`Schema` -> Name of database in Redshift
+
+`Login` -> Username to login to database
+
+`Password` -> Password to login to database
+
+`Port` -> 5439 (By default redshift runs in this port)
+
+* *AWS Credentials*
+
+`Conn Id` -> aws_credentials
+
+`Conn Type` -> Amazon Web Services
+
+`Login` -> IAM user ACCESS KEY
+
+`Password` -> IAM user SECRET ACCESS KEY
