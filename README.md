@@ -87,6 +87,15 @@ In order to load them in to a data warehouse (*Redshift*), a data model was desi
 
 ## ETL Process
 
+* Initially data from all log files (songs and user events) are copied to staging tables `staging_events` and `staging_songs`
+in *Redshift* using _COPY_ command which copies data in a parallel fashion.
+* Using *SQL*, data is extracted from these staging tables, transformed to match the STAR schema design and loaded into 
+appropriate fact and dimension tables.
+* The entire workflow is automated and executed in a particular order to prevent data discrepancies using `Apache Airflow`.
+* The order of execution is as follows
+![Order of workflow execution](https://github.com/command7/SQL_SQL_ETL_Airflow/blob/master/Images/workflow_sequence.png)
+
+
 ## How to run
 
 ## Configurations required
