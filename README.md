@@ -24,9 +24,9 @@ The songs log files contain the following information
 * `duration` 
 * `year`
 
-## STAR Schema Design
+## Data Warehouse Design
 
-In order to load them in to a data warehouse (*Redshift*), a data model was designed using STAR schema containing fact and dimension tables.
+In order to load them in to a data warehouse (*Redshift*), a data model was designed using `STAR schema` containing fact and dimension tables.
 
 ### Fact Table
 
@@ -98,6 +98,42 @@ appropriate fact and dimension tables.
 
 
 ## How to run
+
+In order to recreate this repo and run workflow, follow the instructions below from the command line.
+
+* Clone repository using the following command
+
+`git clone https://github.com/command7/SQL_SQL_ETL_Airflow.git`
+
+* Navigate to project folder using 
+
+`cd SQL_SQL_ETL_Airflow`
+
+* Initialize virtual environment by using
+
+`pipenv shell`
+
+* Install required packages 
+
+`pipenv install Pipfile`
+
+* Create `.env` file as following to direct airflow to load DAGs from project directory
+
+`echo "AIRFLOW_HOME=${PWD}/airflow" >> .env`
+
+* Initialize airflow database by using
+
+`airflow initdb`
+
+* Start airflow scheduler
+
+`airflow scheduler`
+
+* Start airflow webserver
+
+`airflow webserver -p 8080`
+
+* Turn on `Songs_Events_ETL` in the web server GUI.
 
 ## Configurations required
 
