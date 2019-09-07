@@ -52,7 +52,7 @@ In order to load them in to a data warehouse (*Redshift*), a data model was desi
 * `gender`
 * `level`
 
-*_songs*_
+*_songs_*
 
 * `song_id`
 * `title`
@@ -80,6 +80,10 @@ In order to load them in to a data warehouse (*Redshift*), a data model was desi
 
 
 ## Pipeline Components
+
+* `S3 bucket` - Unstructured data in the form of logs are stored in separate s3 buckets
+* `Redshift` - Data Warehouse used as destination of structured data after ETL process and for staging purposes
+* `Airflow` - Automation of ETL pipeline on a daily schedule 
 
 ## ETL Process
 
