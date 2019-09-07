@@ -140,7 +140,8 @@ In order to recreate this repo and run workflow, follow the instructions below f
 Certain credentials need to be stored in `Apache Airflow`'s connections menu.
 
 Open `Airflow GUI` -> `Admin`  -> `Connections` and add the following connections.
-* *Redshift Connection*
+
+### Redshift Connection
 
 `Conn Id` -> redshift_connection
 
@@ -156,7 +157,7 @@ Open `Airflow GUI` -> `Admin`  -> `Connections` and add the following connection
 
 `Port` -> 5439 (By default redshift runs in this port)
 
-* *AWS Credentials*
+### AWS Credentials
 
 `Conn Id` -> aws_credentials
 
